@@ -15,6 +15,7 @@
 | 폴더 | 취약점 | 글 |
 |---|---|---|
 | [`csrf/`](./csrf) | CSRF (Cross-Site Request Forgery) | [CSRF — 쿠키가 자동으로 실리는 것이 왜 문제인가](https://sgom.github.io/posts/csrf-basics/) |
+| [`sql-injection/`](./sql-injection) | SQL 인젝션 | [SQL 인젝션 — 문자열로 이어 붙인 쿼리가 명령이 되는 과정](https://sgom.github.io/posts/sql-injection/) |
 
 ## 실행 환경
 
