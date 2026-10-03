@@ -80,9 +80,11 @@ show('취약', await call(port, '/vuln/search', union));
 show('수정', await call(port, '/safe/search', union));
 
 console.log('\n3. 정렬 컬럼: ? 로 바꿀 수 없는 자리');
-const sort = { sort: "(SELECT CASE WHEN (SELECT substr(password, 1, 1) FROM users WHERE name = 'admin') = 'S' THEN price ELSE name END)" };
-show('취약', await call(port, '/vuln/list', sort));
-show('수정', await call(port, '/safe/list', sort));
+const guess = (ch) => ({ sort: `(SELECT CASE WHEN (SELECT substr(password, 1, 1) FROM users WHERE name = 'admin') = '${ch}' THEN price ELSE name END)` });
+console.log("  첫 글자가 'S'인가 (참이면 가격순, 거짓이면 이름순)");
+show("취약, 'S'로 추측", await call(port, '/vuln/list', guess('S')));
+show("취약, 'A'로 추측", await call(port, '/vuln/list', guess('A')));
+show('수정', await call(port, '/safe/list', guess('S')));
 show('수정, 허용된 컬럼', await call(port, '/safe/list', { sort: 'price' }));
 
 server.close();
