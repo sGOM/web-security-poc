@@ -100,7 +100,8 @@ server.listen(0, "127.0.0.1", async () => {
     const q = `?file=${encodeURIComponent(file)}`;
     const vuln = await get(port, `/vuln${q}`);
     const safe = await get(port, `/safe${q}`);
-    console.log(`[${label}] file=${file}`);
+    // 출력에서는 임시 디렉터리 경로를 <tmp>로 가린다(요청에는 실제 절대 경로를 쓴다).
+    console.log(`[${label}] file=${String(file).replace(root, "<tmp>")}`);
     console.log(`  /vuln -> ${vuln.status} ${JSON.stringify(vuln.body)}`);
     console.log(`  /safe -> ${safe.status} ${JSON.stringify(safe.body)}`);
     console.log("");

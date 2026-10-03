@@ -19,7 +19,7 @@
 | [`xss/`](./xss) | XSS (Cross-Site Scripting) | [XSS — 저장형과 반사형, 출력 이스케이프와 CSP](https://sgom.github.io/posts/xss-basics/) |
 | [`ssrf/`](./ssrf) | SSRF (Server-Side Request Forgery) | [SSRF — 서버가 대신 요청할 때 내부 주소에 닿는 것](https://sgom.github.io/posts/ssrf-basics/) |
 | [`path-traversal/`](./path-traversal) | 경로 조작 (Path Traversal) | [경로 조작 — ../로 공개 디렉터리를 벗어나는 파일 읽기](https://sgom.github.io/posts/path-traversal/) |
-| [`idor/`](./idor) | IDOR (접근 제어 누락) | [IDOR — 로그인은 봤지만 소유자는 보지 않은 접근 제어](https://sgom.github.io/posts/idor/) |
+| [`idor/`](./idor) | IDOR (접근 제어 누락) | [IDOR — 로그인은 확인하고 소유자는 확인하지 않을 때](https://sgom.github.io/posts/idor/) |
 
 ## 실행 환경
 

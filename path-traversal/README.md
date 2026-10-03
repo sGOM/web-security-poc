@@ -23,7 +23,7 @@ node path-traversal.mjs
 
 ```
 v24.15.0
-서버: 127.0.0.1:52900
+서버: 127.0.0.1:59064
 공개 디렉터리: <tmp>/public  (hello.txt, doc.txt)
 비밀 파일:     <tmp>/secret.txt  = "TOP-SECRET"
 
@@ -35,7 +35,7 @@ v24.15.0
   /vuln -> 200 "TOP-SECRET"
   /safe -> 403 "(403 경계 밖 접근 거절)"
 
-[절대 경로] file=C:\Users\pooh6\AppData\Local\Temp\path-traversal-7smIAs\secret.txt
+[절대 경로] file=<tmp>\secret.txt
   /vuln -> 404 "(읽기 실패: ENOENT)"
   /safe -> 403 "(403 경계 밖 접근 거절)"
 ```
