@@ -22,6 +22,7 @@
 | [`idor/`](./idor) | IDOR (접근 제어 누락) | [IDOR — 로그인은 확인하고 소유자는 확인하지 않을 때](https://sgom.github.io/posts/idor/) |
 | [`open-redirect/`](./open-redirect) | 오픈 리다이렉트 (Open Redirect) | [오픈 리다이렉트 — 로그인 뒤 ?next= 를 믿을 때](https://sgom.github.io/posts/open-redirect/) |
 | [`session-fixation/`](./session-fixation) | 세션 고정 (Session Fixation) | [세션 고정 — 로그인해도 세션 ID 가 그대로일 때](https://sgom.github.io/posts/session-fixation/) |
+| [`mass-assignment/`](./mass-assignment) | 대량 할당 (Mass Assignment, 과도한 바인딩) | [대량 할당 — 요청 본문을 객체에 통째로 복사할 때](https://sgom.github.io/posts/mass-assignment/) |
 
 ## 실행 환경
 
