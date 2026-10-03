@@ -18,6 +18,7 @@
 | [`sql-injection/`](./sql-injection) | SQL 인젝션 | [SQL 인젝션 — 문자열로 이어 붙인 쿼리가 명령이 되는 과정](https://sgom.github.io/posts/sql-injection/) |
 | [`xss/`](./xss) | XSS (Cross-Site Scripting) | [XSS — 저장형과 반사형, 출력 이스케이프와 CSP](https://sgom.github.io/posts/xss-basics/) |
 | [`ssrf/`](./ssrf) | SSRF (Server-Side Request Forgery) | [SSRF — 서버가 대신 요청할 때 내부 주소에 닿는 것](https://sgom.github.io/posts/ssrf-basics/) |
+| [`path-traversal/`](./path-traversal) | 경로 조작 (Path Traversal) | [경로 조작 — ../로 공개 디렉터리를 벗어나는 파일 읽기](https://sgom.github.io/posts/path-traversal/) |
 
 ## 실행 환경
 
