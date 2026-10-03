@@ -29,7 +29,8 @@
 | [`hmac-signature/`](./hmac-signature) | 해시 · HMAC · 전자서명 (무결성과 출처 증명 구분) | [해시, HMAC, 전자서명 — 무결성과 출처 증명 구분](https://sgom.github.io/posts/hash-hmac-signature/) |
 | [`password-salt-pepper/`](./password-salt-pepper) | 비밀번호 해시의 salt · pepper (각각 무엇을 막는가) | [비밀번호 해시의 salt와 pepper — 각각 무엇을 막는가](https://sgom.github.io/posts/password-salt-and-pepper/) |
 | [`oauth2-state-csrf/`](./oauth2-state-csrf) | OAuth2 state 파라미터 CSRF (로그인 CSRF / 계정 바인딩) | [OAuth2 기본개념 — 네 역할과 토큰 발급 흐름](https://sgom.github.io/posts/oauth2-basics/) |
+| [`pgp/`](./pgp) | PGP 공개키 암호화 · 서명 · 키 신뢰 (GnuPG) | [PGP: 공개 키로 메시지를 암호화하고 서명하는 방식](https://sgom.github.io/posts/pgp-basics/) |
 
 ## 실행 환경
 
-폴더마다 README에 적는다. 대부분 Node.js 24의 표준 라이브러리만으로 돈다. `jwt/`는 Python 3 표준 라이브러리만, `hmac-signature/`는 Java 26 표준 라이브러리만 쓴다. `password-salt-pepper/`는 Python 3 표준 라이브러리만으로 돌고(`saltpepper.py`), 곁다리 데모 `bcrypt_format.py`만 `pip install bcrypt`가 필요하다. 일부 폴더(`xss/`)는 실제 브라우저 확인에 Playwright를 쓴다. 그 경우 `npm install`로 받는다.
+폴더마다 README에 적는다. 대부분 Node.js 24의 표준 라이브러리만으로 돈다. `jwt/`는 Python 3 표준 라이브러리만, `hmac-signature/`는 Java 26 표준 라이브러리만 쓴다. `password-salt-pepper/`는 Python 3 표준 라이브러리만으로 돌고(`saltpepper.py`), 곁다리 데모 `bcrypt_format.py`만 `pip install bcrypt`가 필요하다. 일부 폴더(`xss/`)는 실제 브라우저 확인에 Playwright를 쓴다. 그 경우 `npm install`로 받는다. `pgp/`는 GnuPG(`gpg`·`gpgv`) 2.4.5가 PATH에 있어야 하며, 빈 임시 키링에서 bash로 돈다.
