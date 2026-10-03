@@ -24,6 +24,7 @@
 | [`session-fixation/`](./session-fixation) | 세션 고정 (Session Fixation) | [세션 고정 — 로그인 뒤에 세션 ID를 바꾸지 않으면](https://sgom.github.io/posts/session-fixation/) |
 | [`mass-assignment/`](./mass-assignment) | 대량 할당 (Mass Assignment, 과도한 바인딩) | [대량 할당 — 요청 본문을 객체에 통째로 복사할 때](https://sgom.github.io/posts/mass-assignment/) |
 | [`deserialization/`](./deserialization) | 안전하지 않은 역직렬화 (Insecure Deserialization, 프로토타입 오염) | [역직렬화 — 신뢰할 수 없는 JSON을 깊은 병합할 때](https://sgom.github.io/posts/deserialization/) |
+| [`timing-attack/`](./timing-attack) | 타이밍 공격 (Timing Attack) | [타이밍 공격 — 비밀을 문자열로 비교하면 시간이 샌다](https://sgom.github.io/posts/timing-attack/) |
 
 ## 실행 환경
 
