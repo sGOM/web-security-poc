@@ -38,13 +38,15 @@ openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -days 1 \
 openssl s_server -accept "$HOST:$PORT" -cert server.crt -key server.key -www >/dev/null 2>&1 &
 SERVER=$!
 
-# 서버가 응답할 때까지 최대 5초 대기 (포트가 이미 쓰이면 명확히 끝낸다)
+# 서버가 응답할 때까지 최대 5초 대기. -verify_return_error 로 "이번 실행의 인증서를 내놓는
+# 서버"만 준비됨으로 센다(다른 TLS 리스너가 4433 을 쥐고 있어도 통과시키지 않는다).
 ready=""
 for _ in $(seq 1 25); do
-  if echo | openssl s_client -connect "$HOST:$PORT" -CAfile ca.crt >/dev/null 2>&1; then ready=1; break; fi
+  if echo | openssl s_client -connect "$HOST:$PORT" -CAfile ca.crt -verify_return_error >/dev/null 2>&1; then ready=1; break; fi
   sleep 0.2
 done
-[ -z "$ready" ] && { echo "서버가 $HOST:$PORT 에서 응답하지 않는다 (포트 사용 중일 수 있다)"; exit 1; }
+kill -0 "$SERVER" 2>/dev/null || { echo "s_server 가 뜨지 못했다 ($HOST:$PORT 이 이미 쓰이는지 확인)"; exit 1; }
+[ -z "$ready" ] && { echo "서버가 $HOST:$PORT 에서 이번 실행의 인증서로 응답하지 않는다"; exit 1; }
 
 # -trace 출력에서 핸드셰이크 메시지 이름과 방향만 뽑는다.
 # stdin 을 1초 열어 둬야 핸드셰이크 뒤의 세션 티켓까지 받고 끊는다.
@@ -69,25 +71,32 @@ run "verify"
 run "verify -CAfile ca.crt"
 run "verify -CAfile ca.crt -verify_hostname example.com"
 
-echo "=== 4. 검증이 실패해도 s_client 는 계속하는가"
+echo "=== 4. 검증이 실패해도 s_client는 계속하는가"
 run "echo | openssl s_client -connect $HOST:$PORT >/dev/null 2>&1; echo exit=\$?"
 run "echo | openssl s_client -connect $HOST:$PORT -verify_return_error >/dev/null 2>&1; echo exit=\$?"
 
 echo "=== 5. 어느 메시지가 키 합의와 서버 인증을 맡나 (trace 에서 측정)"
-# 각 핸드셰이크 메시지가 평문/암호화 레코드 중 어디로 갔는지, 그 안에 key_share(키 교환 공개키)나
+# 각 핸드셰이크 메시지가 암호화돼 갔는지, 그 안에 key_share(키 교환 공개키)나
 # Signature(비밀키 보유 증명)가 들어 있는지를 trace 원문에서 읽어 표시한다. 라벨을 하드코딩하지 않는다.
+# 암호화 판정:
+#   - TLS 1.3: ServerHello 다음부터 레코드가 "Inner Content Type"(암호화 레코드)으로 나온다.
+#   - TLS 1.2: 암호화 전환은 ChangeCipherSpec 이 알린다. 방향별로 CCS 를 지난 뒤의 메시지를 암호화로 본다.
 annotate() {
   sleep 1 | openssl s_client -connect "$HOST:$PORT" "$@" -trace 2>&1 | awk '
-    /^  Content Type = Handshake/       { enc = "평문" }
-    /^  Inner Content Type = Handshake/ { enc = "암호화" }
+    /^Sent TLS Record/     { dir = "C->S" }
+    /^Received TLS Record/ { dir = "S->C" }
+    /^  Content Type = ChangeCipherSpec/ { ccs[dir] = 1 }
+    /^  Inner Content Type = Handshake/  { inner = 1 }
+    /^  Content Type = Handshake/        { inner = 0 }
     /^    [A-Za-z]+, Length=/ {
       name = $0; sub(/,.*/, "", name); sub(/^ +/, "", name);
       cur = name;
-      printf "  %-20s [%s]\n", name, enc;
+      enc = (inner || ccs[dir]) ? "암호화" : "평문";
+      printf "  %-4s %-20s [%s]\n", dir, name, enc;
       next
     }
-    /extension_type=key_share/ { if (cur != "") print "    ↳ " cur " 안에 key_share (키 교환 공개키)" }
-    /^ +Signature \(len=/      { if (cur != "") print "    ↳ " cur " 안에 Signature (비밀키 보유 증명)" }'
+    /extension_type=key_share/ { if (cur != "") print "         -> " cur " 안에 key_share (키 교환 공개키)" }
+    /^ +Signature \(len=/      { if (cur != "") print "         -> " cur " 안에 Signature (비밀키 보유 증명)" }'
 }
 echo "[TLS 1.3]"
 annotate -tls1_3 -CAfile ca.crt
