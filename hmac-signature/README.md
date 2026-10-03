@@ -15,10 +15,11 @@
 ## 실행
 
 ```
-node hmac-signature/integrity.mjs
+cd hmac-signature
+java -Dstdout.encoding=UTF-8 Integrity.java
 ```
 
-Node.js 24 표준 라이브러리(`node:crypto`)만 쓴다. 외부 라이브러리·네트워크 없음. (확인에 쓴 버전 v24.15.0)
+Java 26 표준 라이브러리(`java.security`, `javax.crypto`)만 쓴다. 외부 라이브러리·네트워크 없음. 단일 파일 소스를 컴파일 없이 바로 실행하는 single-file source-code 방식이다(`.class` 파일이 남지 않는다). 콘솔 출력 인코딩을 UTF-8로 맞추려고 `-Dstdout.encoding=UTF-8`을 붙인다. 이 Windows 콘솔은 `stdout.encoding` 기본값이 MS949라, 플래그 없이 돌리면 한글이 `== 1. �ؽ�`처럼 깨진다. 확인에 쓴 버전 26.0.1.
 
 ## 실행 출력
 
@@ -38,7 +39,6 @@ HMAC(amount=5000) = 96fe6de71f074337876b97b42f5c9b23f5a5af637b1f4d2d2ee5f17b92a2
 검증자가 만든 태그    908f8edfa313592486afba6caa21e0d76faa136db2fbcf497015b07f95aec8d5
 
 == 3. 전자서명
-서명 키쌍은 실행마다 새로 생성(서명 값은 매번 달라 찍지 않는다)
 서명 길이 64바이트
 원본 메시지 + 서명                     -> 통과 true
 바꾼 메시지 + 서명                     -> 통과 false
@@ -48,11 +48,12 @@ HMAC(amount=5000) = 96fe6de71f074337876b97b42f5c9b23f5a5af637b1f4d2d2ee5f17b92a2
 - **1번 셋째 줄만 `true`다.** 해시는 공격자가 다시 계산한 값이 통과한다(보호 안 됨). HMAC과 전자서명은 공격자가 다시 만든 값이 거부된다.
 - **HMAC 마지막 두 줄은 `908f8edf…`로 같다.** 검증자도 같은 키를 가져 보낸 쪽과 똑같은 태그를 만든다. 전자서명에는 이에 대응하는 줄이 없다. 검증자가 가진 것은 공개키뿐이고, 공개키로는 서명을 만들 수 없다.
 
-해시와 HMAC 값은 실행마다 같다. HMAC 키는 출력을 고정하려고 문자열(`shared-secret-key`)을 썼다. 실제 키는 해시 출력 길이 이상의 무작위 바이트로 만든다([RFC 2104 3절](https://www.rfc-editor.org/rfc/rfc2104.html#section-3)). 전자서명 키쌍은 실행마다 새로 만들어 서명 값이 매번 다르므로, 서명 값 대신 길이(64바이트)와 검증 결과만 찍는다.
+해시와 HMAC 값은 실행마다 같다. SHA-256 값과 HMAC 값 둘(`96fe6de7…`, `908f8edf…`)은 `openssl dgst`로 다시 계산해 일치를 확인했다. HMAC 키는 출력을 고정하려고 문자열(`shared-secret-key`)을 썼다. 실제 키는 해시 출력 길이 이상의 무작위 바이트로 만든다([RFC 2104 3절](https://www.rfc-editor.org/rfc/rfc2104.html#section-3)). 전자서명 키쌍은 실행마다 새로 만들어 서명 값이 매번 다르므로, 서명 값 대신 길이(64바이트)와 검증 결과만 찍는다.
 
-값 비교는 `crypto.timingSafeEqual`로 한다(블로그 예시의 `MessageDigest.isEqual`에 대응). 상수 시간 비교가 실제로 필요한 자리는 **HMAC뿐**이다. 비교 시간이 내용에 따라 달라지면 공격자가 그 차이로 유효한 태그를 앞에서부터 한 바이트씩 맞춰 갈 수 있기 때문이다. 해시는 비밀이 없고 공격자가 값을 직접 계산할 수 있어 비교 시간이 새도 얻을 것이 없고, 전자서명 검증은 공개키·메시지·서명이 모두 공개라 비교로 샐 비밀 자체가 없다. 상수 시간 비교의 원리는 [`timing-attack/`](../timing-attack) PoC가 따로 다룬다.
+값 비교는 비교 시간이 내용에 따라 달라지지 않는 [`MessageDigest.isEqual`](https://docs.oracle.com/en/java/javase/26/docs/api/java.base/java/security/MessageDigest.html#isEqual(byte%5B%5D,byte%5B%5D))로 한다. 상수 시간 비교가 실제로 필요한 자리는 **HMAC뿐**이다. 비교 시간이 내용에 따라 달라지면 공격자가 그 차이로 유효한 태그를 앞에서부터 한 바이트씩 맞춰 갈 수 있기 때문이다. 해시는 비밀이 없고 공격자가 값을 직접 계산할 수 있어 비교 시간이 새도 얻을 것이 없고, 전자서명 검증은 공개키·메시지·서명이 모두 공개라 비교로 샐 비밀 자체가 없다. 상수 시간 비교의 원리는 [`timing-attack/`](../timing-attack) PoC가 따로 다룬다.
 
 ## 한계
 
 - **세 원시 함수의 보장 차이만 보인다.** 키 관리, 키 교환, 공개키 진위 확인(인증서·핑거프린트), 재전송 방지(nonce·타임스탬프)의 현실적 어려움은 다루지 않는다. 이것들은 각각 별도 문제다.
+- **상수 시간 비교가 필요한 자리는 HMAC뿐이고, 그 원리는 여기서 다루지 않는다.** 이 PoC는 `MessageDigest.isEqual`을 쓸 뿐 비교 시간 차이를 측정하지 않는다. 비교 시간이 새는 원리와 공격은 [`timing-attack/`](../timing-attack) PoC로 미룬다.
 - **공격은 "메시지 변조 후 값 재생성" 하나다.** HMAC에서 추측한 키로 만든 태그가 거부되는 것은 추측 한 번의 실패이지 위조 불가능성의 증명이 아니다. 전자서명에서는 공격자가 자기 키로 서명해도 검증자가 원래 서명자의 공개키로 검증하므로 실패한다. 키 없이 태그·서명을 만들 수 없다는 근거는 [RFC 2104 6절](https://www.rfc-editor.org/rfc/rfc2104.html#section-6)과 [RFC 8032](https://www.rfc-editor.org/rfc/rfc8032.html)의 보안 논의에 있다.
