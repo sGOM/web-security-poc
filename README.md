@@ -27,7 +27,8 @@
 | [`timing-attack/`](./timing-attack) | 타이밍 공격 (Timing Attack) | [타이밍 공격 — 비밀 값 비교에 걸리는 시간이 새는 정보](https://sgom.github.io/posts/timing-attack/) |
 | [`jwt/`](./jwt) | JWT 서명 검증 (JWT Signature Verification) | [JWT: 서명, 만료, 저장 위치](https://sgom.github.io/posts/jwt-basics/) |
 | [`hmac-signature/`](./hmac-signature) | 해시 · HMAC · 전자서명 (무결성과 출처 증명 구분) | [해시, HMAC, 전자서명 — 무결성과 출처 증명 구분](https://sgom.github.io/posts/hash-hmac-signature/) |
+| [`password-salt-pepper/`](./password-salt-pepper) | 비밀번호 해시의 salt · pepper (각각 무엇을 막는가) | [비밀번호 해시의 salt와 pepper — 각각 무엇을 막는가](https://sgom.github.io/posts/password-salt-and-pepper/) |
 
 ## 실행 환경
 
-폴더마다 README에 적는다. 대부분 Node.js 24의 표준 라이브러리만으로 돈다. `jwt/`는 Python 3 표준 라이브러리만 쓴다. 일부 폴더(`xss/`)는 실제 브라우저 확인에 Playwright를 쓴다. 그 경우 `npm install`로 받는다.
+폴더마다 README에 적는다. 대부분 Node.js 24의 표준 라이브러리만으로 돈다. `jwt/`는 Python 3 표준 라이브러리만, `hmac-signature/`는 Java 26 표준 라이브러리만 쓴다. `password-salt-pepper/`는 Python 3 표준 라이브러리만으로 돌고(`saltpepper.py`), 곁다리 데모 `bcrypt_format.py`만 `pip install bcrypt`가 필요하다. 일부 폴더(`xss/`)는 실제 브라우저 확인에 Playwright를 쓴다. 그 경우 `npm install`로 받는다.
