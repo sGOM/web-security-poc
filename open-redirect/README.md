@@ -81,6 +81,7 @@ next 값마다 취약/고침의 Location(302) 을 대조한다.
 - `https://evil.example/phish`: 외부 절대 URL. 취약한 쪽은 `Location`에 그대로 넣어 피해자를 외부로 보낸다. 고친 쪽은 슬래시로 시작하지 않아 거절하고 `/`로 돌린다.
 - `//evil.example`: 스킴 상대 URL. 브라우저는 `Location: //evil.example`를 현재 페이지와 같은 스킴(http/https)을 붙인 `http(s)://evil.example`로 해석해 외부로 나간다. 취약한 쪽은 그대로 넣는다. 고친 쪽은 `//`로 시작해 거절한다.
 - `/\evil.example`: 역슬래시 우회. 브라우저와 WHATWG URL 파서는 `http(s)` 같은 특수 스킴에서 `\`를 `/`와 같게 다뤄 `/\evil.example`를 `//evil.example`로 본다. 결국 외부 호스트로 나간다. 취약한 쪽은 그대로 넣는다. 고친 쪽은 `/\`로 시작해 1단계에서 거절하고, 2단계의 `new URL(...).origin`도 `http://evil.example`로 풀려 거절한다.
+- `/<TAB>/evil.example`(둘째 문자가 탭): `//`·`/\`로 시작하지 않아 1단계 문자열 검사를 통과한다. 그런데 WHATWG URL 파서가 파싱 전에 ASCII 탭·개행을 제거해 `//evil.example`과 같아지므로, `new URL(...).origin`이 `http://evil.example`로 풀려 2단계 오리진 검사에서 거절된다. 문자열 검사만으로는 못 잡고 오리진 검사가 받치는 경우다.
 - `javascript:alert(1)`: 슬래시로 시작하지 않아 1단계에서 거절한다. `new URL('javascript:alert(1)', base).origin`은 `null`이라 2단계로도 걸린다.
 
 ## 한계
