@@ -2,7 +2,7 @@
 
 신뢰할 수 없는 입력을 객체로 복원(역직렬화)할 때, 입력이 객체 구조 자체를 조작하면 서버 로직이 바뀐다. Node.js에서 가장 흔한 구체 형태는 **JSON을 파싱해 기존 객체에 깊은 병합(deep merge)할 때 `__proto__` 키를 따라가 프로토타입을 오염(prototype pollution)시키는 것**이다. `JSON.parse('{"__proto__":{"isAdmin":true}}')`는 own 키 `__proto__`를 가진 객체를 만들고, 키를 가리지 않는 재귀 병합은 그 키를 `target.__proto__`(= `Object.prototype`)로 따라가 전역 프로토타입에 `isAdmin`을 심는다. 그러면 공격 본문과 아무 관계도 없는 평범한 빈 객체 `{}`까지 `isAdmin`을 상속해, `if (u.isAdmin)` 같은 권한 게이트가 열린다.
 
-글: [안전하지 않은 역직렬화 — JSON 깊은 병합과 프로토타입 오염](https://sgom.github.io/posts/deserialization/)
+글: [역직렬화 — 신뢰할 수 없는 JSON을 깊은 병합할 때](https://sgom.github.io/posts/deserialization/)
 
 ## 무엇을 보이나
 
