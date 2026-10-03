@@ -44,7 +44,7 @@ node open-redirect.mjs
 ```
 $ node open-redirect.mjs
 Node.js v24.15.0
-로그인 서버: http://127.0.0.1:53135
+로그인 서버: http://127.0.0.1:51702
 
 next 값마다 취약/고침의 Location(302) 을 대조한다.
 
@@ -62,6 +62,10 @@ next 값마다 취약/고침의 Location(302) 을 대조한다.
 
   next = "/\\evil.example"
     취약 /vuln/redirect -> 302 Location: /\evil.example
+    고침 /safe/redirect -> 302 거절 -> /
+
+  next = "/\t/evil.example"
+    취약 /vuln/redirect -> 302 Location: /	/evil.example
     고침 /safe/redirect -> 302 거절 -> /
 
   next = "javascript:alert(1)"

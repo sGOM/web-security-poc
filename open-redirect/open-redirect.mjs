@@ -55,6 +55,7 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
     'https://evil.example/phish',      // 외부 절대 URL
     '//evil.example',                  // 스킴 상대 URL
     '/' + String.fromCharCode(92) + 'evil.example',  // 백슬래시 우회 (/\evil.example)
+    '/' + String.fromCharCode(9) + '/evil.example',  // 탭 삽입 (/<TAB>/evil.example): 문자열 모양 검사는 통과하고 origin 검사에서 걸린다
     'javascript:alert(1)',             // javascript: 스킴
   ];
 

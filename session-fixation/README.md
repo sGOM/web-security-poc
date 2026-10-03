@@ -2,7 +2,7 @@
 
 로그인 전부터 존재하던 세션 ID 를 로그인 뒤에도 그대로 쓰면, 공격자가 미리 심어 둔 세션 ID 로 피해자의 로그인 세션을 가로챈다. 공격자는 아직 로그인되지 않은 세션 ID 하나를 정해 피해자가 그 ID 를 쿠키로 들고 로그인하게 만든다. 로그인이 그 ID 를 그대로 둔 채 user 만 붙이면, 같은 ID 를 쥔 공격자가 로그인된 세션을 그대로 쓴다. 핵심 방어는 로그인 성공 시 세션 ID 를 새로 발급(regenerate)하는 것이다.
 
-글: [세션 고정 — 로그인해도 세션 ID 가 그대로일 때](https://sgom.github.io/posts/session-fixation/)
+글: [세션 고정 — 로그인 뒤에 세션 ID를 바꾸지 않으면](https://sgom.github.io/posts/session-fixation/)
 
 ## 무엇을 보이나
 

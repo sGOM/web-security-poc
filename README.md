@@ -21,7 +21,7 @@
 | [`path-traversal/`](./path-traversal) | 경로 조작 (Path Traversal) | [경로 조작 — ../로 공개 디렉터리를 벗어나는 파일 읽기](https://sgom.github.io/posts/path-traversal/) |
 | [`idor/`](./idor) | IDOR (접근 제어 누락) | [IDOR — 로그인은 확인하고 소유자는 확인하지 않을 때](https://sgom.github.io/posts/idor/) |
 | [`open-redirect/`](./open-redirect) | 오픈 리다이렉트 (Open Redirect) | [오픈 리다이렉트 — 로그인 뒤 ?next= 를 믿을 때](https://sgom.github.io/posts/open-redirect/) |
-| [`session-fixation/`](./session-fixation) | 세션 고정 (Session Fixation) | [세션 고정 — 로그인해도 세션 ID 가 그대로일 때](https://sgom.github.io/posts/session-fixation/) |
+| [`session-fixation/`](./session-fixation) | 세션 고정 (Session Fixation) | [세션 고정 — 로그인 뒤에 세션 ID를 바꾸지 않으면](https://sgom.github.io/posts/session-fixation/) |
 | [`mass-assignment/`](./mass-assignment) | 대량 할당 (Mass Assignment, 과도한 바인딩) | [대량 할당 — 요청 본문을 객체에 통째로 복사할 때](https://sgom.github.io/posts/mass-assignment/) |
 
 ## 실행 환경
