@@ -16,7 +16,8 @@
 |---|---|---|
 | [`csrf/`](./csrf) | CSRF (Cross-Site Request Forgery) | [CSRF — 쿠키가 자동으로 실리는 것이 왜 문제인가](https://sgom.github.io/posts/csrf-basics/) |
 | [`sql-injection/`](./sql-injection) | SQL 인젝션 | [SQL 인젝션 — 문자열로 이어 붙인 쿼리가 명령이 되는 과정](https://sgom.github.io/posts/sql-injection/) |
+| [`xss/`](./xss) | XSS (Cross-Site Scripting) | [XSS — 저장형과 반사형, 출력 이스케이프와 CSP](https://sgom.github.io/posts/xss-basics/) |
 
 ## 실행 환경
 
-폴더마다 README에 적는다. 대부분 Node.js 24 하나로 돈다. `package.json`이 없어도 되도록 표준 라이브러리만 쓴다.
+폴더마다 README에 적는다. 대부분 Node.js 24의 표준 라이브러리만으로 돈다. 일부 폴더(`xss/`)는 실제 브라우저 확인에 Playwright를 쓴다. 그 경우 `npm install`로 받는다.
