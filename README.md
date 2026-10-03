@@ -25,6 +25,7 @@
 | [`mass-assignment/`](./mass-assignment) | 대량 할당 (Mass Assignment, 과도한 바인딩) | [대량 할당 — 요청 본문을 객체에 통째로 복사할 때](https://sgom.github.io/posts/mass-assignment/) |
 | [`deserialization/`](./deserialization) | 안전하지 않은 역직렬화 (Insecure Deserialization, 프로토타입 오염) | [역직렬화 — 신뢰할 수 없는 JSON을 깊은 병합할 때](https://sgom.github.io/posts/deserialization/) |
 | [`timing-attack/`](./timing-attack) | 타이밍 공격 (Timing Attack) | [타이밍 공격 — 비밀 값 비교에 걸리는 시간이 새는 정보](https://sgom.github.io/posts/timing-attack/) |
+| [`jwt/`](./jwt) | JWT 서명 검증 (JWT Signature Verification) | [JWT: 서명, 만료, 저장 위치](https://sgom.github.io/posts/jwt-basics/) |
 | [`hmac-signature/`](./hmac-signature) | 해시 · HMAC · 전자서명 (무결성과 출처 증명 구분) | [해시, HMAC, 전자서명 — 무결성과 출처 증명 구분](https://sgom.github.io/posts/hash-hmac-signature/) |
 
 ## 실행 환경
