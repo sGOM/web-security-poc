@@ -99,6 +99,17 @@ server.listen(0, "127.0.0.1", async () => {
   console.log("세션: alice 로그인 (토큰 sess-alice)");
   console.log("");
 
+  // 비로그인: 토큰 없이 요청하면 두 경로 모두 401이다.
+  // 차이는 "로그인 이후" 소유자를 보느냐뿐임을 먼저 보인다.
+  {
+    const vuln = await get(port, "/vuln/order?id=1", null);
+    const safe = await get(port, "/safe/order?id=1", null);
+    console.log("[비로그인] 토큰 없이 id=1 요청");
+    console.log(`  /vuln -> ${vuln.status} ${vuln.body}`);
+    console.log(`  /safe -> ${safe.status} ${safe.body}`);
+    console.log("");
+  }
+
   // alice 세션으로 자기 주문(1)과 남의 주문(3)을 양쪽 경로에 요청한다.
   const cases = [
     { label: "자기 주문", id: 1 },
