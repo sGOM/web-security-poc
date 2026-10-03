@@ -28,6 +28,7 @@
 | [`jwt/`](./jwt) | JWT 서명 검증 (JWT Signature Verification) | [JWT: 서명, 만료, 저장 위치](https://sgom.github.io/posts/jwt-basics/) |
 | [`hmac-signature/`](./hmac-signature) | 해시 · HMAC · 전자서명 (무결성과 출처 증명 구분) | [해시, HMAC, 전자서명 — 무결성과 출처 증명 구분](https://sgom.github.io/posts/hash-hmac-signature/) |
 | [`password-salt-pepper/`](./password-salt-pepper) | 비밀번호 해시의 salt · pepper (각각 무엇을 막는가) | [비밀번호 해시의 salt와 pepper — 각각 무엇을 막는가](https://sgom.github.io/posts/password-salt-and-pepper/) |
+| [`oauth2-state-csrf/`](./oauth2-state-csrf) | OAuth2 state 파라미터 CSRF (로그인 CSRF / 계정 바인딩) | [OAuth2 기본개념 — 네 역할과 토큰 발급 흐름](https://sgom.github.io/posts/oauth2-basics/) |
 
 ## 실행 환경
 
