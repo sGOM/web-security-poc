@@ -17,6 +17,7 @@
 | [`csrf/`](./csrf) | CSRF (Cross-Site Request Forgery) | [CSRF — 쿠키가 자동으로 실리는 것이 왜 문제인가](https://sgom.github.io/posts/csrf-basics/) |
 | [`sql-injection/`](./sql-injection) | SQL 인젝션 | [SQL 인젝션 — 문자열로 이어 붙인 쿼리가 명령이 되는 과정](https://sgom.github.io/posts/sql-injection/) |
 | [`xss/`](./xss) | XSS (Cross-Site Scripting) | [XSS — 저장형과 반사형, 출력 이스케이프와 CSP](https://sgom.github.io/posts/xss-basics/) |
+| [`ssrf/`](./ssrf) | SSRF (Server-Side Request Forgery) | [SSRF — 서버가 대신 요청할 때 내부 주소에 닿는 것](https://sgom.github.io/posts/ssrf-basics/) |
 
 ## 실행 환경
 
