@@ -44,9 +44,13 @@ Node.js v24.15.0
     결과: []
 
 3. 정렬 컬럼: ? 로 바꿀 수 없는 자리
-  취약 -> 200
+  첫 글자가 'S'인가 (참이면 가격순, 거짓이면 이름순)
+  취약, 'S'로 추측 -> 200
     실행된 SQL: SELECT name, price FROM products ORDER BY (SELECT CASE WHEN (SELECT substr(password, 1, 1) FROM users WHERE name = 'admin') = 'S' THEN price ELSE name END)
     결과: [{"name":"mouse","price":20000},{"name":"keyboard","price":50000},{"name":"monitor","price":300000}]
+  취약, 'A'로 추측 -> 200
+    실행된 SQL: SELECT name, price FROM products ORDER BY (SELECT CASE WHEN (SELECT substr(password, 1, 1) FROM users WHERE name = 'admin') = 'A' THEN price ELSE name END)
+    결과: [{"name":"keyboard","price":50000},{"name":"monitor","price":300000},{"name":"mouse","price":20000}]
   수정 -> 400
     결과: "허용하지 않는 정렬 컬럼"
   수정, 허용된 컬럼 -> 200
