@@ -30,4 +30,4 @@
 
 ## 실행 환경
 
-폴더마다 README에 적는다. 대부분 Node.js 24의 표준 라이브러리만으로 돈다. 일부 폴더(`xss/`)는 실제 브라우저 확인에 Playwright를 쓴다. 그 경우 `npm install`로 받는다.
+폴더마다 README에 적는다. 대부분 Node.js 24의 표준 라이브러리만으로 돈다. `jwt/`는 Python 3 표준 라이브러리만 쓴다. 일부 폴더(`xss/`)는 실제 브라우저 확인에 Playwright를 쓴다. 그 경우 `npm install`로 받는다.
